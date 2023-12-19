@@ -9,9 +9,12 @@ use Illuminate\Validation\ValidationException;
 final readonly class Login
 {
     /** @param  array{}  $args */
-    public function __invoke(null $_, array $args)
+    public function __invoke(null $_, array $args): string
     {
-        $user = User::where('email', $args['email'])->first();
+        /** @var \App\Models\User|null $user */
+        $user = User::query()
+            ->where('email', $args['email'])
+            ->first();
 
         if (! $user || ! Hash::check($args['password'], $user->password)) {
             throw ValidationException::withMessages([
