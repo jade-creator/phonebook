@@ -8,7 +8,7 @@ type Contact {
     updated_at: DateTime!
 }
 
-extend type Query {
+extend type Query @guard {
     listContacts(
       name: String @where(operator: "like")
     ): [Contact!]! @paginate(defaultCount: 10)
