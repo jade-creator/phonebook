@@ -1,5 +1,3 @@
-scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
-
 type Contact {
     id: ID!
     name: String!
@@ -17,16 +15,20 @@ extend type Query @guard {
 }
 
 extend type Mutation @guard {
-    createContact(
-        name: String!
-        contact_no: String!
-    ): Contact! @create
+    createContact(input: CreateContactInput! @spread): Contact! @create
 
-    updateContact(
-        id: ID!
-        name: String!
-        contact_no: String!
-    ): Contact! @update
+    updateContact(input: UpdateContactInput! @spread): Contact! @update
 
     deleteContact(id: ID! @whereKey): Contact! @delete
+}
+
+input CreateContactInput {
+    name: String!
+    contact_no: String!
+}
+
+input UpdateContactInput {
+    id: ID!
+    name: String!
+    contact_no: String!
 }
