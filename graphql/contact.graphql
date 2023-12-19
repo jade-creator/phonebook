@@ -16,7 +16,7 @@ extend type Query @guard {
     viewContact(id: ID! @eq): Contact @first
 }
 
-extend type Mutation {
+extend type Mutation @guard {
     createContact(
         name: String!
         contact_no: String!
