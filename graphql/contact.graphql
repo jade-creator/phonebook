@@ -1,0 +1,32 @@
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+type Contact {
+    id: ID!
+    name: String!
+    contact_no: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+extend type Query {
+    listContacts(
+      name: String @where(operator: "like")
+    ): [Contact!]! @paginate(defaultCount: 10)
+
+    viewContact(id: ID! @eq): Contact @first
+}
+
+extend type Mutation {
+    createContact(
+        name: String!
+        contact_no: String!
+    ): Contact! @create
+
+    updateContact(
+        id: ID!
+        name: String!
+        contact_no: String!
+    ): Contact! @update
+
+    deleteContact(id: ID! @whereKey): Contact! @delete
+}
